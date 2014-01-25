@@ -75,6 +75,12 @@
 				phoneNumber.focus();
 				return false;
 			}
+			if(phoneNumber.value<9)
+			{
+				alert("Number is Less then 9 ");
+				phoneNumber.focus();
+				return false;
+			}
 			if(CheckInternationalPhoneNum(phoneNumber.value)==false)
 			{
 				alert("Enter a valid number");
