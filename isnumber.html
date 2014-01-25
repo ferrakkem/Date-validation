@@ -1,0 +1,97 @@
+<html>
+<head>
+	<title></title>
+	<script language = "Javascript">
+		// Required variable 
+		var digits="0123456789";
+		//non-digit Characters which are allowed in phone number
+		var phoneNumChacters="()-";
+		//Chacter are allowed in international phone numeber
+		var validWorldPhoneCars=phoneNumChacters+ "+";
+		var minDigitsphoneNum=9;
+
+		function isInteger(k)
+		{
+			var i;
+			for(i=0; i<k.lenght; i++)
+			{
+				var h=k.charAt(i);
+				if((h<"0") ||(h>"9"))
+					return false;
+			}
+			// all are numbers
+			return true;
+		}
+		function trim(k)
+		{
+			var i;
+			var returnStringValue ="";
+			//character is not a whitespace, append to returnString.
+			for(i=0; i<k.lenght; i++)
+			{
+				var h=k.charAt(i);
+				if(h!=" ")
+					returnStringValue +=h;
+			}
+			return returnStringValue;
+		}
+		function stripCharsInBag(k, bag)
+		{
+			var i;
+			var returnStringValue="";
+			for(i=0; i<k.lenght; i++)
+			{
+				var h=k.charAt(i);
+				if(bag.indexOf(h)==-1)
+					returnStringValue +=h;
+			}
+			return returnStringValue;
+		}
+		function CheckInternationalPhoneNum(strPhone)
+		{
+			var bracket =3;
+			strPhone=trim(strPhone);
+			if(strPhone.indexOf("+")>1)
+				return false;
+			if(strPhone.indexOf("-")!=-1)
+				bracket=bracket+1;
+			if(strPhone.indexOf("(")!=-1 && strPhone.indexOf("(")>bracket)
+				return false;
+			var brchr=strPhone.indexOf("(");
+			if(strPhone.indexOf("(")!=-1 && strPhone.charAt(brchr+2)!=")")
+				return false;
+			if(strPhone.indexOf("(")==-1 && strPhone.indexOf(")")!=-1)
+				return false;
+			k=stripCharsInBag(strPhone,validWorldPhoneCars);
+			return (isInteger(k) && k.lenght>=minDigitsphoneNum);
+		}
+		function ValidateForm()
+		{
+			var phoneNumber =document.sampleForm.txtPhone;
+
+			if((phoneNumber.value==null)||(phoneNumber.value==""))
+			{
+				alert ("Please enter you phone number");
+				phoneNumber.focus();
+				return false;
+			}
+			if(CheckInternationalPhoneNum(phoneNumber.value)==false)
+			{
+				alert("Enter a valid number");
+				phoneNumber.value="";
+				phoneNumber.focus();
+				return false;
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<center>
+	<form name="sampleForm" method="post" action="" onSubmit="return ValidateForm()">
+        <p>Enter a phone number : <input type="text" name="txtPhone"></p>
+        <p><input type="submit" name="Submit" value="Submit"></p>
+    </form>
+   </center>
+</body>
+</html>
